@@ -14,17 +14,17 @@
 #ifndef particle_attractor_h
 #define particle_attractor_h
 
-#include "PsConstants.h"
 #include "Particle_Abstract.h"
 
 class Particle_Attractor : public Particle_Abstract {
 public:
-    static byte atx; //horizontal attractor position
-    static byte aty; //vertical attractor position
-    static signed char atf; //attractor force
+    static uint16_t atx; //horizontal attractor position
+    static uint16_t aty; //vertical attractor position
+    static int16_t atf;  //attractor force
 
-    Particle_Attractor();
-    void update(void);
+    Particle_Attractor(void);
+    Particle_Attractor(uint16_t atx, uint16_t aty);
+    void update(ParticleSysConfig *g);
 };
 
 #endif /* particle_attractor_h */

@@ -14,21 +14,32 @@
 #ifndef p_system_h
 #define p_system_h
 
-#include "PsConstants.h"
+#include "ParticleSysConfig.h"
 #include "Particle_Abstract.h"
 #include "Emitter_Abstract.h"
 
+// use this as the main .h file, so we will include all the .h files of the project
+#include "Particle_Attractor.h"
+#include "Particle_Bounce.h"
+#include "Particle_Fixed.h"
+#include "Particle_Std.h"
+#include "Emitter_Fire.h"
+#include "Emitter_Fixed.h"
+#include "Emitter_Fountain.h"
+#include "Emitter_Side.h"
+#include "Emitter_Spin.h"
+#include "FastLEDRenderer.h"
 
-//#include "Arduino.h"
 
 class ParticleSys {
 public:
     static byte perCycle;
-    byte num;
+    ParticleSysConfig *g;
+    byte numParticles;
     Particle_Abstract *particles;
     Emitter_Abstract *emitter;
 
-    ParticleSys(byte num, Particle_Abstract particles[], Emitter_Abstract *emitter);
+    ParticleSys(ParticleSysConfig *g, byte numParticles, Particle_Abstract particles[], Emitter_Abstract *emitter);
     void update();
 
 private:

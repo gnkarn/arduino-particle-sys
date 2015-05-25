@@ -15,9 +15,10 @@
 
 byte ParticleSys::perCycle = 1;
 
-ParticleSys::ParticleSys(byte num, Particle_Abstract particles[], Emitter_Abstract *emitter)
+ParticleSys::ParticleSys(ParticleSysConfig *g, byte numParticles, Particle_Abstract particles[], Emitter_Abstract *emitter)
 {
-    this->num = num;
+    this->g = g;
+    this->numParticles = numParticles;
     this->particles = particles;
     this->emitter = emitter;
 }
@@ -25,14 +26,14 @@ ParticleSys::ParticleSys(byte num, Particle_Abstract particles[], Emitter_Abstra
 void ParticleSys::update()
 {
     cycleRemaining = perCycle;
-    emitter->update();
-    for(int i = 0; i<num; i++) {
+    emitter->update(this->g);
+    for(byte i=0; i<numParticles; i++) {
         if (!particles[i].isAlive && cycleRemaining > 0) {
-            emitter->emit(&particles[i]);
+            emitter->emit(&particles[i], this->g);
             cycleRemaining--;
         }
         if (particles[i].isAlive){
-            particles[i].update();    
+            particles[i].update(this->g);
         }
     }
 }

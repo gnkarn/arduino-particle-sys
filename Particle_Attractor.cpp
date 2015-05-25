@@ -13,31 +13,33 @@
 
 #include "Particle_Attractor.h"
 
-byte Particle_Attractor::atx = 112;
-byte Particle_Attractor::aty = 112;
-signed char Particle_Attractor::atf = 4;
+uint16_t Particle_Attractor::atx = 0;
+uint16_t Particle_Attractor::aty = 0;
+int16_t Particle_Attractor::atf = 4;
 
-Particle_Attractor::Particle_Attractor()
+Particle_Attractor::Particle_Attractor(void)
 {
-    isAlive = false;
+    isAlive = 0;
+}
+Particle_Attractor::Particle_Attractor(uint16_t atx, uint16_t aty) {
+    this->atx = atx;
+    this->aty = aty;
+    isAlive = 0;
 }
 
-void Particle_Attractor::update(void)
+void Particle_Attractor::update(ParticleSysConfig *g)
 {
-    int dx, dy, tempX, tempY, tempVx, tempVy;
-    signed char acx, acy;
+    int16_t dx, dy, tempX, tempY, tempVx, tempVy;
+    int16_t acx, acy;
     float mult;
-    //age
-    //ttl--;
-    if (ttl == 0) {
-        isAlive = false;
-    }
+    
+    //this particle does not age
 
-    dx = (int)atx - x;
-    dy = (int)aty - y;
+    dx = (int16_t)atx - x;
+    dy = (int16_t)aty - y;
     mult = (float)atf/sqrt(dx*dx+dy*dy);
-    acx = (signed char)(mult*dx);
-    acy = (signed char)(mult*dy);
+    acx = (int16_t)(mult*dx);
+    acy = (int16_t)(mult*dy);
 
     //apply acceleration
     tempVx = vx+acx;
@@ -46,25 +48,39 @@ void Particle_Attractor::update(void)
     tempX = x + tempVx;
     tempY = y + tempVy;
 
-    if (tempX < 0 || tempX > PS_MAX_X){
-        tempVx = 0;//-tempVx;
+    if (tempX < 0 || tempX > g->max_x) {
+        tempVx = 0;
     }
-    if (tempY < 0 || tempY > PS_MAX_Y){
-        tempVy = 0;//-tempVy;
+    if (tempY < 0 || tempY > g->max_y) {
+        tempVy = 0;
     }
 
-    if (tempVx > 50 || tempVx < -50) vx = random(10)-5;
-    else vx = tempVx;
+    if (tempVx > 50 || tempVx < -50) {
+        vx = random(10)-5;
+    } else {
+        vx = tempVx;
+    }
 
-    if (tempVy > 50 || tempVy < -50) vy = random(10)-5;
-    else vy = tempVy;
+    if (tempVy > 50 || tempVy < -50) {
+        vy = random(10)-5;
+    } else {
+        vy = tempVy;
+    }
 
-    if (tempX > PS_MAX_X) x = PS_MAX_X;
-    else if (tempX < 0) x = 0;
-    else x = tempX;
+    if (tempX > g->max_x) {
+        x = g->max_x;
+    } else if (tempX < 0) {
+        x = 0;
+    } else {
+        x = tempX;
+    }
 
-    if (tempY > PS_MAX_Y) y = PS_MAX_Y;
-    else if (tempY < 0) y = 0;
-    else y = tempY;
+    if (tempY > g->max_y) {
+        y = g->max_y;
+    } else if (tempY < 0) {
+        y = 0;
+    } else {
+        y = tempY;
+    }
 }
 

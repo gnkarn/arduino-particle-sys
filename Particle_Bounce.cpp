@@ -13,36 +13,35 @@
 
 #include "Particle_Bounce.h"
 
-signed char Particle_Bounce::ax = 0;
-signed char Particle_Bounce::ay = 0;
+int16_t Particle_Bounce::ax = 0;
+int16_t Particle_Bounce::ay = 0;
 
 Particle_Bounce::Particle_Bounce()
 {
-    isAlive = false;
+    isAlive = 0;
 }
 
-void Particle_Bounce::update(void)
+void Particle_Bounce::update(ParticleSysConfig *g)
 {
     //age
     ttl--;
 
     //apply acceleration
-    vx = min(vx + ax, PS_MAX_X);
-    vy = min(vy + ay, PS_MAX_Y);
+    vx = min(vx + ax, g->max_x);
+    vy = min(vy + ay, g->max_y);
 
     //apply velocity
-    unsigned int newX, newY;
-    if (y == 0 || y >= PS_MAX_Y) {
+    if (y == 0 || y >= g->max_y) {
         vy = -1 * vy;
     }
-    if (x == 0 || x >= PS_MAX_X) {
+    if (x == 0 || x >= g->max_x) {
         vx = -1 * vx;
     }
     if (ttl == 0 || (vx == 0 && vy == 0)) {
-        isAlive = false;
+        isAlive = 0;
     } else {
-        x = min(max(x + vx, 0), PS_MAX_X);
-        y = min(max(y + vy, 0), PS_MAX_Y);
+        x = min(max(x + vx, 0), g->max_x);
+        y = min(max(y + vy, 0), g->max_y);
     }
 }
 

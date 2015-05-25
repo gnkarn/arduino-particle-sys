@@ -15,19 +15,19 @@
 #define emitter_fixed_h
 
 #include "Emitter_Abstract.h"
-#include "Arduino.h"
+#include <Arduino.h>
 
 class Emitter_Fixed : public Emitter_Abstract {
 public:
     unsigned int counter;
-    byte x;
-    byte y;
-    signed char vx;
-    signed char vy;
+    uint16_t x;
+    uint16_t y;
+    int16_t vx;
+    int16_t vy;
     byte ttl;
 
-    Emitter_Fixed(byte x, byte y, signed char vx, signed char vy, byte ttl);
-    void emit(Particle_Abstract * particle);
+    Emitter_Fixed(uint16_t x, uint16_t y, int16_t vx, int16_t vy, byte ttl);
+    void emit(Particle_Abstract *particle, ParticleSysConfig *g);
 };
 
 #endif /* emitter_fixed_h */

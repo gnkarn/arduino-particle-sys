@@ -13,7 +13,7 @@
 
 #include "Emitter_Fixed.h"
 
-Emitter_Fixed::Emitter_Fixed(byte x, byte y, signed char vx, signed char vy, byte ttl)
+Emitter_Fixed::Emitter_Fixed(uint16_t x, uint16_t y, int16_t vx, int16_t vy, byte ttl)
 {
     counter = 0;
     this->x = x;
@@ -23,7 +23,7 @@ Emitter_Fixed::Emitter_Fixed(byte x, byte y, signed char vx, signed char vy, byt
     this->ttl = ttl;
 }
 
-void Emitter_Fixed::emit(Particle_Abstract * particle)
+void Emitter_Fixed::emit(Particle_Abstract *particle, ParticleSysConfig *g)
 {
     counter++;
 

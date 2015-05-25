@@ -14,16 +14,15 @@
 #ifndef particle_std_h
 #define particle_std_h
 
-#include "PsConstants.h"
 #include "Particle_Abstract.h"
 
 class Particle_Std : public Particle_Abstract {
 public:
-    static signed char ax; //horizontal acceleration
-    static signed char ay; //vertical acceleration
+    static int16_t ax; //horizontal acceleration
+    static int16_t ay; //vertical acceleration
 
     Particle_Std();
-    void update(void);
+    void update(ParticleSysConfig *g);
 };
 
 #endif /* particle_std_h */
