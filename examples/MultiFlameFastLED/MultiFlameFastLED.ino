@@ -12,10 +12,12 @@
   * example with multiple particle systems, creates multiple flames
   */
 
+#include <SmartMatrix.h>
 #include <FastLED.h>
+#include <ParticleSys.h>
 
-#define LED_WIDTH 8
-#define LED_HEIGHT 8
+#define LED_WIDTH 32
+#define LED_HEIGHT 32
 
 // set ledSerpentineLayout to true if your matrix looks wrong ;) - see Example "XYMatrix" in FastLED library.
 const bool ledSerpentineLayout = false;  
@@ -39,15 +41,11 @@ uint16_t XY( uint8_t x, uint8_t y) {
   return ret;
 }
 
-// Particle System
-
-#include <ParticleSys.h>
-
 #define NUM_LEDS    (LED_WIDTH * LED_HEIGHT)
-#define LED_PIN     7
-#define COLOR_ORDER GRB
-#define CHIPSET     WS2811
-#define BRIGHTNESS  32
+//#define LED_PIN     7
+//#define COLOR_ORDER GRB
+#define CHIPSET     SMART_MATRIX
+#define BRIGHTNESS  255
 CRGB leds[ NUM_LEDS ];
 
 // particle system 1
@@ -72,7 +70,7 @@ FastLEDRenderer renderer(&g);
 
 
 void setup() {
-  FastLED.addLeds<CHIPSET, LED_PIN, COLOR_ORDER>(leds, NUM_LEDS).setCorrection(TypicalLEDStrip);
+  FastLED.addLeds<CHIPSET>(leds, NUM_LEDS);
   FastLED.setBrightness( BRIGHTNESS );
 
   randomSeed(analogRead(0));
@@ -102,6 +100,6 @@ void loop() {
     renderer.render(&g, particles, numParticles, leds);  // render first particle system
     renderer.render(&g, particles2, numParticles2, leds);  // render second particle system
     FastLED.show();
-    delay(30);
+    delay(8);
 }
 

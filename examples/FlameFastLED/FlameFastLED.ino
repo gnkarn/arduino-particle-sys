@@ -45,7 +45,7 @@ uint16_t XY( uint8_t x, uint8_t y) {
 //#define LED_PIN     7
 //#define COLOR_ORDER GRB
 #define CHIPSET     SMART_MATRIX
-#define BRIGHTNESS  96
+#define BRIGHTNESS  255
 CRGB leds[ NUM_LEDS ];
 
 const byte numParticles = 60;
